@@ -10,12 +10,6 @@ export const getUsers = () => {
 		return res.data;
 	});
 };
-export const joinUser = (obj) => {
-	return post_urlFormData(`http://localhost:9367/api/user`, obj).then(({ data }) => {
-		return data;
-	});
-};
-
 export const noticeAPI = () => {
 	return get_normal("/notice.json");
 };

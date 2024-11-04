@@ -21,7 +21,9 @@ export default function Login() {
 				</div>
 				<div>
 					<input type="submit" value={"로그인"} />{" "}
-					<input type="button" value={"회원가입"} onClick={() => navigate("/user")} />
+					<input type="button" value={"회원가입"} onClick={() => navigate("/user/sign-up")} />{" "}
+					<input type="button" value={"아이디찾기"} onClick={() => navigate("/user/sign-up")} />{" "}
+					<input type="button" value={"비밀번호찾기"} onClick={() => navigate("/user/sign-up")} />
 				</div>
 			</form>
 		</div>

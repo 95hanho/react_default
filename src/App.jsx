@@ -10,8 +10,11 @@ import AllLoding from "./components/AllLoding.jsx";
 import Login from "./containers/Login.jsx";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import LoginJoin from "./containers/LoginJoin.jsx";
 import UserSearch from "./containers/UserSearch.jsx";
+import UserSignUp from "./containers/UserSignUp.jsx";
+import UserFindId from "./containers/UserFindId.jsx";
+import UserFindPwd from "./containers/UserFindPwd.jsx";
+import UserChangePwd from "./containers/UserChangePwd.jsx";
 
 const queryClient = new QueryClient();
 
@@ -31,11 +34,19 @@ function App() {
 				<QueryClientProvider client={queryClient}>
 					<BrowserRouter>
 						<AxiosInterceptor>
-							<Nav />
 							<Change_router />
 							<Routes>
+								{/* 로그인 */}
 								<Route path="/" element={<Login />} />
-								<Route path="/user" element={<LoginJoin />} />
+								{/* 회원가입 */}
+								<Route path="/user/sign-up" element={<UserSignUp />} />
+								{/* 아이디찾기 */}
+								<Route path="/user/find-id" element={<UserFindId />} />
+								{/* 비밀번호찾기 */}
+								<Route path="/user/find-pwd" element={<UserFindPwd />} />
+								{/* 비밀번호변경 */}
+								<Route path="/user/change-pwd" element={<UserChangePwd />} />
+
 								<Route path="/user-search" element={<UserSearch />} />
 								<Route path="/1" element={<Notice />} />
 								<Route path="/1" element={<Notice />} />
