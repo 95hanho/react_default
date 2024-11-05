@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { joinUser } from "../services/user";
+import { id_duplCheck, joinUser } from "../services/user";
 
 export default function UserSignUp() {
 	const navigate = useNavigate();
@@ -42,7 +42,19 @@ export default function UserSignUp() {
 		},
 	});
 	// 아이디 중복 체크
-	const id_duplCheck_before = () => {};
+	const id_duplCheck_before = () => {
+		if (!user.user_id) {
+			alert(`'아이디'를(을) 입력해주세요.`);
+			formEle.user_id.focus();
+		} else {
+			id_duplCheck(user.user_id)
+				.then(({ data }) => {
+					console.log(data);
+					console.log(typeof data);
+				})
+				.catch((err) => {});
+		}
+	};
 	const signUpUser_before = (e) => {
 		e.preventDefault();
 		let formEle = document.signUpForm;
@@ -74,7 +86,9 @@ export default function UserSignUp() {
 			<form name="signUpForm" onSubmit={signUpUser_before}>
 				<div>
 					아이디 : <input type="text" name="user_id" value={user.user_id} onChange={change_user} />
-					<button onClick={id_duplCheck_before}>중복확인</button>
+					<button type="button" onClick={id_duplCheck_before}>
+						중복확인
+					</button>
 				</div>
 				<p className="c_red"></p>
 				<div>
