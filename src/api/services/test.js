@@ -1,5 +1,6 @@
-import { get_normal, post_urlFormData } from "./apiDOC";
+import { get_normal, post_urlFormData } from "../apiFilter";
 
+export const testLogin = () => post_urlFormData().then(({data}) => data);
 export const testAPI = () => {
 	return get_normal("http://localhost:9367/api/users").then((res) => {
 		return res.data;

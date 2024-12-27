@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { id_duplCheck, joinUser } from "../services/user";
+import { id_duplCheck, joinUser } from "../api/services/user";
 
 export default function UserSignUp() {
 	const navigate = useNavigate();
 
 	let [id_msg, set_id_msg] = useState("");
-	let [pwd_msg, set_pwd_msg] = useState("");
 	const origin_user = {
 		user_id: "",
 		user_pwd: "",
@@ -17,58 +16,77 @@ export default function UserSignUp() {
 	};
 	const [user, set_user] = useState(origin_user);
 	const change_user = (e) => {
+		if (e.target.name == "user_id") {
+			if (id_msg) set_id_msg("");
+			set_id_duplStatus(false);
+		}
 		set_user({
 			...user,
 			[e.target.name]: e.target.value,
 		});
 	};
+	const [id_duplStatus, set_id_duplStatus] = useState(false);
+
 	const reset_user = () => {
 		set_user({ ...origin_user });
+		set_id_msg("");
+		set_id_duplStatus(false);
 	};
 	const joinUser_fn = useMutation({
 		mutationFn: () => joinUser(user),
+		// Mutation이 시작되기 직전에 특정 작업을 수행
 		onMutate(a, b, c) {},
-		onSuccess(a, b, c) {
-			console.log(a, b, c);
-			navigate("/user-search");
+		onSuccess({ data }) {
+			console.log(data);
+			// reset_user();
+			// navigate("/user-search");
+			return data;
 		},
-		onError(a, b, c) {
-			console.log(a, b, c);
+		onError(err) {
+			console.log(err);
 			// 사용 가능한 아이디입니다.
 		},
 		// 결과에 관계 없이 무언가 실행됨
-		onSettled(a, b, c) {
-			// console.log(a, b, c);
+		onSettled(a, b) {
+			// console.log(a, b);
 		},
 	});
+	// 알람과 포커스
+	const alertAndFocus = (name, ment) => {
+		let formEle = document.signUpForm;
+		alert(ment);
+		formEle[name].focus();
+	};
+
 	// 아이디 중복 체크
 	const id_duplCheck_before = () => {
 		if (!user.user_id) {
-			alert(`'아이디'를(을) 입력해주세요.`);
-			formEle.user_id.focus();
+			set_id_msg(`'아이디'를(을) 입력해주세요.`);
 		} else {
 			id_duplCheck(user.user_id)
 				.then(({ data }) => {
-					console.log(data);
-					console.log(typeof data);
+					set_id_duplStatus(true);
+					set_id_msg(`사용가능한 아이디 입니다.`);
 				})
-				.catch((err) => {});
+				.catch((err) => {
+					if (err.code === "ID_DUPLICATED") {
+						set_id_msg(`중복된 아이디입니다.`);
+					}
+					console.log(err);
+				});
 		}
 	};
 	const signUpUser_before = (e) => {
 		e.preventDefault();
-		let formEle = document.signUpForm;
 		const regExp_obj = {
 			user_pwd: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]{8,}$/,
 			email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
 		};
 		const alertAndMark = (name, ment) => {
 			if (!user[name]) {
-				alert(`'${ment}'를(을) 입력해주세요.`);
-				formEle[name].focus();
+				alertAndFocus(name, `'${ment}'를(을) 입력해주세요.`);
 			} else if (regExp_obj[name] && !regExp_obj[name].test(user[name])) {
-				alert(`'${ment}'의 형식에 맞지 않습니다.`);
-				formEle[name].focus();
+				alertAndFocus(name, `'${ment}'의 형식에 맞지 않습니다.`);
 			} else return false;
 			return true;
 		};
@@ -77,8 +95,12 @@ export default function UserSignUp() {
 
 		for (let index in valueName) {
 			if (alertAndMark(nameList[index], valueName[index])) return;
+			if (index == 0 && !id_duplStatus) {
+				alert("아이디 중복확인을 해주세요.");
+				return;
+			}
 		}
-		// joinUser_fn.mutate();
+		joinUser_fn.mutate();
 	};
 
 	return (
@@ -90,7 +112,7 @@ export default function UserSignUp() {
 						중복확인
 					</button>
 				</div>
-				<p className="c_red"></p>
+				<p className={id_duplStatus ? "c_green" : "c_red"}>{id_msg}</p>
 				<div>
 					비밀번호 :{" "}
 					<input

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { get_normal } from "./apiDOC";
+import { get_normal, post_urlFormData } from "../apiFilter";
 
 // 아이디 중복체크
 // export const id_duplCheck = (id) => {
@@ -10,7 +10,5 @@ export const id_duplCheck = (id) => {
 };
 // 회원가입
 export const joinUser = (obj) => {
-	return post_urlFormData(`http://localhost:9367/api/user`, obj).then(({ data }) => {
-		return data;
-	});
+	return post_urlFormData(`/api/user/sign-up`, obj);
 };

@@ -1,26 +1,27 @@
-import { useEffect } from "react";
-import { noticeAPI, testAPI } from "../services/test";
+import { getUsers } from "../api/services/test";
 import { useQuery } from "@tanstack/react-query";
+import { css } from "@emotion/css";
 
-export default function Notice() {
-	console.log("Notice");
+export default function UserSearch() {
+	console.log("UserSearch");
 
-	const { data: noticeList } = useQuery({ queryKey: ["notice"], queryFn: testAPI });
-
-	useEffect(() => {
-		// noticeAPI().then(({ data }) => {
-		// 	console.log(data);
-		// });
-		// console.log(data);
-	}, []);
+	const { data: userList } = useQuery({ queryKey: ["users"], queryFn: getUsers });
 
 	return (
 		<>
-			<h2>Notice</h2>
-			<div>
+			<h2>User리스트</h2>
+			<div
+				className={css`
+					padding: 10px;
+					&:hover {
+						color: #f00;
+					}
+				`}
+			>
 				<table>
 					<thead>
 						<tr>
+							<th>No. </th>
 							<th>아이디</th>
 							<th>닉네임</th>
 							<th>비번</th>
@@ -29,9 +30,10 @@ export default function Notice() {
 						</tr>
 					</thead>
 					<tbody>
-						{noticeList &&
-							noticeList.map((v) => (
-								<tr key={"noticeList" + v.id}>
+						{userList &&
+							userList.map((v, i) => (
+								<tr key={"userList" + v.id}>
+									<td>{i + 1}</td>
 									<td>{v.id}</td>
 									<td>{v.nickName}</td>
 									<td>{v.password}</td>

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { boardAPI } from "../services/test";
+import { boardAPI } from "../api/services/test";
 
 export default function Board() {
 	console.log("Board");
