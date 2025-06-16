@@ -2,23 +2,19 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-const instance = axios.create({
-	// baseURL: "https://m-dev.exc.co.kr",
-	// baseURL: "https://apihome.exc.co.kr",
-	//   baseURL: "http://localhost:9238",
-});
-
-const baseURL1 = "https://apihome.exc.co.kr";
+const instance = axios.create({});
 
 const AxiosInterceptor = ({ children }) => {
 	const location = useLocation();
 
 	// 요청 성공
 	const requestFulfill = async (config) => {
-		// console.log(config);
-		if (config.url.startsWith("/api")) {
-			config.baseURL = baseURL1;
+		console.log(config.url);
+
+		if(config.url.startsWith('/api')) {
+			config.url = process.env.VITE_BASEURL + config.url;
 		}
+
 		return config;
 	};
 	// 요청 에러

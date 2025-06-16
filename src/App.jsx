@@ -1,20 +1,20 @@
 import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Nav from "./components/Nav.jsx";
-import Notice from "./containers/Notice.jsx";
 import { useEffect, useState } from "react";
-import Board from "./containers/Board.jsx";
-import Community from "./containers/Community.jsx";
-import { testAPI } from "./services/test.js";
-import { AxiosInterceptor } from "./hooks/AxiosInterceptor.jsx";
+import { testAPI } from "./api/services/test.js";
+import { AxiosInterceptor } from "./api/AxiosInterceptor.jsx";
 import AllLoding from "./components/AllLoding.jsx";
-import Login from "./containers/Login.jsx";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import UserSearch from "./containers/UserSearch.jsx";
-import UserSignUp from "./containers/UserSignUp.jsx";
-import UserFindId from "./containers/UserFindId.jsx";
-import UserFindPwd from "./containers/UserFindPwd.jsx";
-import UserChangePwd from "./containers/UserChangePwd.jsx";
+import Notice from "./pages/Notice.jsx";
+import Community from "./pages/Community.jsx";
+import Board from "./pages/Board.jsx";
+import Login from "./pages/Login.jsx";
+import UserSearch from "./pages/UserSearch.jsx";
+import UserSignUp from "./pages/UserSignUp.jsx";
+import UserFindId from "./pages/UserFindId.jsx";
+import UserFindPwd from "./pages/UserFindPwd.jsx";
+import UserChangePwd from "./pages/UserChangePwd.jsx";
 
 const queryClient = new QueryClient();
 
@@ -46,7 +46,7 @@ function App() {
 								<Route path="/user/find-pwd" element={<UserFindPwd />} />
 								{/* 비밀번호변경 */}
 								<Route path="/user/change-pwd" element={<UserChangePwd />} />
-
+								{/*  */}
 								<Route path="/user-search" element={<UserSearch />} />
 								<Route path="/1" element={<Notice />} />
 								<Route path="/1" element={<Notice />} />

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { communityAPI } from "../services/test";
+import { communityAPI } from "../api/services/test";
 
 export default function Community() {
 	console.log("Community");
