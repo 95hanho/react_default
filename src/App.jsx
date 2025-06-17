@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-ro
 import Nav from "./components/Nav.jsx";
 import { useEffect, useState } from "react";
 import { testAPI } from "./api/services/test.js";
-import { AxiosInterceptor } from "./api/AxiosInterceptor.jsx";
 import AllLoding from "./components/AllLoding.jsx";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -15,6 +14,7 @@ import UserSignUp from "./pages/UserSignUp.jsx";
 import UserFindId from "./pages/UserFindId.jsx";
 import UserFindPwd from "./pages/UserFindPwd.jsx";
 import UserChangePwd from "./pages/UserChangePwd.jsx";
+import { AxiosInterceptor } from "./hooks/AxiosInterceptor.jsx";
 
 const queryClient = new QueryClient();
 

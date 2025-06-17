@@ -11,8 +11,8 @@ const AxiosInterceptor = ({ children }) => {
 	const requestFulfill = async (config) => {
 		console.log(config.url);
 
-		if(config.url.startsWith('/api')) {
-			config.url = process.env.VITE_BASEURL + config.url;
+		if (config.url.startsWith("/api")) {
+			config.url = import.meta.env.VITE_BASEURL + config.url;
 		}
 
 		return config;

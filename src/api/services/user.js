@@ -1,4 +1,3 @@
-import axios from "axios";
 import { get_normal, post_urlFormData } from "../apiFilter";
 
 // 아이디 중복체크
