@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { id_duplCheck, joinUser } from "../api/services/user";
 
 export default function UserSignUp() {
-	const navigate = useNavigate();
+//   const navigate = useNavigate();
 
 	let [id_msg, set_id_msg] = useState("");
+	// let [pwd_msg, set_pwd_msg] = useState("");
 	const origin_user = {
 		user_id: "",
 		user_pwd: "",
@@ -27,15 +28,15 @@ export default function UserSignUp() {
 	};
 	const [id_duplStatus, set_id_duplStatus] = useState(false);
 
-	const reset_user = () => {
-		set_user({ ...origin_user });
-		set_id_msg("");
-		set_id_duplStatus(false);
-	};
+	// const reset_user = () => {
+	// 	set_user({ ...origin_user });
+	// 	set_id_msg("");
+	// 	set_id_duplStatus(false);
+	// };
 	const joinUser_fn = useMutation({
 		mutationFn: () => joinUser(user),
 		// Mutation이 시작되기 직전에 특정 작업을 수행
-		onMutate(a, b, c) {},
+		onMutate() {},
 		onSuccess({ data }) {
 			console.log(data);
 			// reset_user();
@@ -47,7 +48,7 @@ export default function UserSignUp() {
 			// 사용 가능한 아이디입니다.
 		},
 		// 결과에 관계 없이 무언가 실행됨
-		onSettled(a, b) {
+		onSettled() {
 			// console.log(a, b);
 		},
 	});
@@ -64,7 +65,7 @@ export default function UserSignUp() {
 			set_id_msg(`'아이디'를(을) 입력해주세요.`);
 		} else {
 			id_duplCheck(user.user_id)
-				.then(({ data }) => {
+				.then(() => {
 					set_id_duplStatus(true);
 					set_id_msg(`사용가능한 아이디 입니다.`);
 				})
@@ -79,7 +80,8 @@ export default function UserSignUp() {
 	const signUpUser_before = (e) => {
 		e.preventDefault();
 		const regExp_obj = {
-			user_pwd: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]{8,}$/,
+			// 영문자 1개이상, 숫자 1개이상, 특수문자 1이상, 최소8자이상
+			user_pwd: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()[\]{}\-_=+\\|;:'",.<>/?`~])[a-zA-Z\d!@#$%^&*()[\]{}\-_=+\\|;:'",.<>/?`~]{8,}$/, 
 			email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
 		};
 		const alertAndMark = (name, ment) => {
