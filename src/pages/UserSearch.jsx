@@ -1,11 +1,7 @@
-import { getUsers } from "../api/services/test";
-import { useQuery } from "@tanstack/react-query";
 import { css } from "@emotion/css";
 
 export default function UserSearch() {
 	console.log("UserSearch");
-
-	const { data: userList } = useQuery({ queryKey: ["users"], queryFn: getUsers });
 
 	return (
 		<>
@@ -30,7 +26,7 @@ export default function UserSearch() {
 						</tr>
 					</thead>
 					<tbody>
-						{userList &&
+						{/* {userList &&
 							userList.map((v, i) => (
 								<tr key={"userList" + v.id}>
 									<td>{i + 1}</td>
@@ -40,7 +36,7 @@ export default function UserSearch() {
 									<td>{v.createDate}</td>
 									<td>{v.refreshToken}</td>
 								</tr>
-							))}
+							))} */}
 					</tbody>
 				</table>
 			</div>

@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
 	}
 	return {
 		plugins: [react()],
-    define: {
+		define: {
 			"process.env": {
 				VITE_BASEURL: env.VITE_BASEURL,
 				VITE_OUTDIR: env.VITE_OUTDIR,

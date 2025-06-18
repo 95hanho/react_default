@@ -1,8 +1,6 @@
-import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-
-const instance = axios.create({});
+import { instance } from "../api/instance";
 
 const AxiosInterceptor = ({ children }) => {
 	const location = useLocation();
@@ -11,8 +9,8 @@ const AxiosInterceptor = ({ children }) => {
 	const requestFulfill = async (config) => {
 		console.log(config.url);
 
-		if (config.url.startsWith("/api")) {
-			config.url = import.meta.env.VITE_BASEURL + config.url;
+		if (config.url.startsWith("/bapi")) {
+			// config.url = import.meta.env.VITE_BASEURL + config.url;
 		}
 
 		return config;
@@ -28,7 +26,7 @@ const AxiosInterceptor = ({ children }) => {
 	};
 	// 응답 에러
 	const responseReject = (err) => {
-		return Promise.reject(err.response.data);
+		return Promise.reject(err.response);
 	};
 
 	const requestInterceptors = instance.interceptors.request.use(requestFulfill, requestReject);
@@ -38,10 +36,9 @@ const AxiosInterceptor = ({ children }) => {
 			instance.interceptors.request.eject(requestInterceptors);
 			instance.interceptors.response.eject(responseInterceptors);
 		};
-	}, [location.pathname]);
+	}, [location.pathname, requestInterceptors, responseInterceptors]);
 
 	return children;
 };
 
-export default instance;
 export { AxiosInterceptor };

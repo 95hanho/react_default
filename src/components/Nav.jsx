@@ -1,13 +1,32 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
+import useAuth from "../hooks/context/useAuth";
+
+const MenuBar = styled.div`
+	padding: 0 20px;
+`;
 
 export default function Nav() {
-	const location = useLocation();
+	const navigate = useNavigate();
+	const { loginOn, logout } = useAuth();
 
-	if (location.pathname !== "/") {
-		return (
-			<div>
-				<Link to={"/1"}>notice</Link>|<Link to={"/2"}>board</Link>|<Link to={"/3"}>community</Link>
-			</div>
-		);
-	}
+	return (
+		<MenuBar className="nav">
+			{loginOn && (
+				<>
+					<div>
+						<button
+							onClick={() => {
+								logout();
+								navigate("/");
+							}}
+						>
+							로그아웃
+						</button>
+					</div>
+					<Link to={"/1"}>notice</Link>|<Link to={"/2"}>board</Link>|<Link to={"/3"}>community</Link>
+				</>
+			)}
+		</MenuBar>
+	);
 }
