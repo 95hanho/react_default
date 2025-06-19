@@ -1,4 +1,4 @@
-// API 엔드포인트 목록 - API url 모음집
+// API 엔드포인트 목록 - API url 모음집, pathstring은 ':변수명' 이렇게 쓰기
 // const API_ENDPOINTS = {
 
 const test_auth = "/bapi/auth";

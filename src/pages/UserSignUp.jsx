@@ -2,6 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useTestIdDuplCheck from "../hooks/test/useTestIdDuplCheck";
 import useTestUserJoin from "../hooks/test/useTestUserJoin";
+import styled from "@emotion/styled";
+
+const UserSignUpWrap = styled.section`
+	width: 300px;
+	border: 1px solid #ccc;
+`;
 
 export default function UserSignUp() {
 	const navigate = useNavigate();
@@ -10,7 +16,7 @@ export default function UserSignUp() {
 	const { mutate: submitSignup } = useTestUserJoin();
 
 	let [id_msg, set_id_msg] = useState("");
-	let [pwd_msg, set_pwd_msg] = useState("");
+
 	const origin_user = {
 		user_id: "",
 		user_pwd: "",
@@ -47,7 +53,7 @@ export default function UserSignUp() {
 	// 아이디 중복 체크
 	const id_duplCheck_before = () => {
 		if (!user.user_id) {
-			set_id_msg(`'아이디'를(을) 입력해주세요.`);
+			set_id_msg(`'아이디'를 입력해주세요.`);
 		} else {
 			checkIdDuplicate(
 				{ id: user.user_id },
@@ -106,7 +112,7 @@ export default function UserSignUp() {
 	};
 
 	return (
-		<section id="userSignUp">
+		<UserSignUpWrap id="userSignUp">
 			<form name="signUpForm" onSubmit={signUpUser_before}>
 				<div>
 					아이디 : <input type="text" name="user_id" value={user.user_id} onChange={change_user} />
@@ -132,6 +138,6 @@ export default function UserSignUp() {
 					<input type="submit" value="가입" />
 				</div>
 			</form>
-		</section>
+		</UserSignUpWrap>
 	);
 }

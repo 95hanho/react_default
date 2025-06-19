@@ -1,7 +1,7 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { AxiosInterceptor } from "./AxiosInterceptor";
 import PropTypes from "prop-types";
 import { AuthProvider } from "./AuthProvider";
+import AxiosInterceptor from "./AxiosInterceptor";
 
 export default function AppProvider({ children }) {
 	return (

@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { instance } from "../api/instance";
 
-const AxiosInterceptor = ({ children }) => {
+export default function AxiosInterceptor({ children }) {
 	const location = useLocation();
 
 	// 요청 성공
@@ -39,6 +39,4 @@ const AxiosInterceptor = ({ children }) => {
 	}, [location.pathname, requestInterceptors, responseInterceptors]);
 
 	return children;
-};
-
-export { AxiosInterceptor };
+}
