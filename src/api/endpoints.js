@@ -2,6 +2,7 @@
 // const API_ENDPOINTS = {
 
 const test_auth = "/bapi/auth";
+const test_board = "/bapi/board";
 
 export const API_URL = {
 	// 테스트
@@ -10,4 +11,5 @@ export const API_URL = {
 	TEST_PHONE_AUTH: test_auth + "/phone", // 휴대폰 인증
 	TEST_USER_JOIN: test_auth + "/member", // 회원가입
 	TEST_USER_TOKEN: test_auth + "/token", // 토큰재발급
+	TEST_BOARD: test_board, // 게시물리스트
 };

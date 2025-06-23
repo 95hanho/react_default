@@ -1,3 +1,4 @@
+/* 전체 레이아웃 */
 import PropTypes from "prop-types";
 import AllLoding from "../components/AllLoding";
 import Nav from "../components/Nav";

@@ -1,14 +1,14 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import PropTypes from "prop-types";
-import { AuthProvider } from "./AuthProvider";
 import AxiosInterceptor from "./AxiosInterceptor";
+import AuthProvider from "./AuthProvider";
 
 export default function AppProvider({ children }) {
 	return (
 		<>
-			<AxiosInterceptor>
-				<AuthProvider>{children}</AuthProvider>
-			</AxiosInterceptor>
+			<AuthProvider>
+				<AxiosInterceptor>{children}</AxiosInterceptor>
+			</AuthProvider>
 			{import.meta.env.VITE_OUTDIR == "test" && (
 				/* 데이터확인용 */
 				<ReactQueryDevtools />

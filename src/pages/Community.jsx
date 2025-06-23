@@ -1,14 +1,9 @@
 import { useEffect } from "react";
-import { communityAPI } from "../api/services/test";
 
 export default function Community() {
 	console.log("Community");
 
-	useEffect(() => {
-		communityAPI().then(({ data }) => {
-			console.log(data);
-		});
-	}, []);
+	useEffect(() => {}, []);
 
 	return <h2>Community</h2>;
 }

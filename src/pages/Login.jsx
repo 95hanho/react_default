@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom";
+/* 로그인 페이지 */
+import { useLocation, useNavigate } from "react-router-dom";
 import useTestLogin from "../hooks/test/useTestLogin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import useAuth from "../hooks/context/useAuth";
 
@@ -10,14 +11,17 @@ const LoginMain = styled.div`
 
 export default function Login() {
 	const navigate = useNavigate();
+	const location = useLocation();
+	const query = new URLSearchParams(location.search);
+	const message = query.get("message");
+
+	const { loginToken, loginOn } = useAuth();
+	const { mutate: login } = useTestLogin();
 
 	const [user, set_user] = useState({
 		id: "hoseongs",
 		password: "aaaaaa1!",
 	});
-
-	const { loginToken, loginOn } = useAuth();
-	const { mutate: login } = useTestLogin();
 
 	const login_before = (e) => {
 		console.log("login_before");
@@ -40,8 +44,8 @@ export default function Login() {
 				},
 				onError(err) {
 					console.log(err);
-					if (err.status === 400) {
-						alert(err.data.msg);
+					if (err.status === 400 && err.response?.data?.msg) {
+						alert(err.response?.data?.msg);
 						return;
 					}
 					alert("서버 오류!!");
@@ -49,6 +53,14 @@ export default function Login() {
 			}
 		);
 	};
+
+	useEffect(() => {
+		if (message === "need_login") {
+			alert("로그인이 필요한 메시지 입니다.");
+			// 쿼리 파라미터 없이 현재 경로로 이동
+			navigate(location.pathname, { replace: true });
+		}
+	}, [message, location.pathname, navigate]);
 
 	if (!loginOn) {
 		return (
@@ -78,9 +90,10 @@ export default function Login() {
 						/>
 					</div>
 					<div>
-						<input type="submit" value={"로그인"} /> <input type="button" value={"회원가입"} onClick={() => navigate("/user/sign-up")} />{" "}
+						<input type="submit" value={"로그인"} />
+						{/* <input type="button" value={"회원가입"} onClick={() => navigate("/user/sign-up")} />{" "}
 						<input type="button" value={"아이디찾기"} onClick={() => navigate("/user/sign-up")} />{" "}
-						<input type="button" value={"비밀번호찾기"} onClick={() => navigate("/user/sign-up")} />
+						<input type="button" value={"비밀번호찾기"} onClick={() => navigate("/user/sign-up")} /> */}
 					</div>
 				</form>
 			</LoginMain>

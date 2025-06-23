@@ -1,3 +1,4 @@
+/* 전체로딩 */
 import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
 

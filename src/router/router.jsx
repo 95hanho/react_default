@@ -1,12 +1,18 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter, Outlet, redirect } from "react-router-dom";
 import Login from "../pages/Login";
-import UserSignUp from "../pages/UserSignUp";
-import UserFindId from "../pages/UserFindId";
-import UserFindPwd from "../pages/UserFindPwd";
-import UserChangePwd from "../pages/UserChangePwd";
-import UserSearch from "../pages/UserSearch";
-import AppLayout from "../layouts/AppLayout";
 import AppProvider from "../providers/AppProvider";
+import BoardPage from "../pages/BoardPage";
+import AppLayout from "../layouts/AppLayout";
+
+// ✅ 로그인 여부 검사
+const requireAuth = () => {
+	const token = localStorage.getItem("accessToken");
+	if (!token) {
+		// alert("로그인이 필요한 페이지입니다.");
+		return redirect("/?message=need_login"); // 로그인 페이지로 쿼리로 페이지에서 알람 띄워주기
+	}
+	return null;
+};
 
 const router = createBrowserRouter([
 	{
@@ -25,37 +31,9 @@ const router = createBrowserRouter([
 				element: <Login />,
 			},
 			{
-				/* 회원가입 */
-				path: "/user/sign-up",
-				element: <UserSignUp />,
-			},
-			{
-				/* 아이디 찾기 */
-				path: "/user/find-id",
-				element: <UserFindId />,
-			},
-			{
-				/* 비밀번호 찾기 */
-				path: "/user/find-pwd",
-				element: <UserFindPwd />,
-			},
-			{
-				/* 비밀번호 변경 */
-				path: "/user/change-pwd",
-				element: <UserChangePwd />,
-			},
-			{
-				path: "/user-search",
-				element: <UserSearch />,
-			},
-			{
-				path: "/1",
-			},
-			{
-				path: "/2",
-			},
-			{
-				path: "/3",
+				path: "/board",
+				element: <BoardPage />,
+				loader: requireAuth,
 			},
 		],
 	},

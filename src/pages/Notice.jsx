@@ -1,18 +1,9 @@
 import { useEffect } from "react";
-import { noticeAPI, testAPI } from "../api/services/test";
-import { useQuery } from "@tanstack/react-query";
 
 export default function Notice() {
 	console.log("Notice");
 
-	const { data: noticeList } = useQuery({ queryKey: ["notice"], queryFn: testAPI });
-
-	useEffect(() => {
-		// noticeAPI().then(({ data }) => {
-		// 	console.log(data);
-		// });
-		// console.log(data);
-	}, []);
+	useEffect(() => {}, []);
 
 	return (
 		<>
@@ -28,18 +19,7 @@ export default function Notice() {
 							<th>토큰</th>
 						</tr>
 					</thead>
-					<tbody>
-						{noticeList &&
-							noticeList.map((v) => (
-								<tr key={"noticeList" + v.id}>
-									<td>{v.id}</td>
-									<td>{v.nickName}</td>
-									<td>{v.password}</td>
-									<td>{v.createDate}</td>
-									<td>{v.refreshToken}</td>
-								</tr>
-							))}
-					</tbody>
+					<tbody></tbody>
 				</table>
 			</div>
 		</>
